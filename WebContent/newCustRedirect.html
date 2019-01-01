@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="windows-1255" http-equiv="refresh" content="10;url=http://localhost:8080/CouponsProjectAPIs/LoginPage.html" />
+<title>register</title>
+<style>
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1;
+    cursor: pointer;
+}
+#text{
+    position: absolute;
+    text-align: center;
+    top: 30%;
+    left: 50%;
+    font-size: 20px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+</style>
+
+</head>
+
+<body  style="background-color:MistyRose;font-family:verdana"  onload="overlay()">>
+	
+	<div id="overlay">
+	<!-- <div id="overlay" style="text-align: center; margin: 0; position: absolute; top: 30%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%)"> -->
+		 <div id="text">
+			<h1 style="color: PaleVioletRed;text-shadow: 2px 1px 1px white;" > Congrats! </h1>
+			<p> you have registered successfully. </p>
+			<p > you will be redirected back to login page in 10 seconds</p>
+			<img src="countdown.gif" alt="Countdown" style="width:480px;height:270px">
+			</div>
+</div>
+
+	
+	
+	<form id="registerForm" action="javascript:myFunction(); return false;" method="post" 
+		style="background-color: White; outline-style: solid; outline-color: White; outline-width: 10px; border-style: solid; border-color: PaleVioletRed; 
+		padding: 60px; text-align: center; margin: 0; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%)">
+		 <fieldset disabled style="background-color: White; outline-style: solid; outline-color: White;">
+		<h1> join the club! </h1>
+		<br><br><br>
+		<br> <b> UserName: </b> <input id="a" type="text" name="customerName" > <br>
+		<br> <b> Password :</b> <input id="b" type="password" name="customerPassword" > <br>
+		<br> <b> repeat password: </b> <input id="c" type="password" name="passwordValidation">
+		<br> <br> <br>
+		 <input type="submit" value="Join" onclick="javascript:myFunction(); return false;" > <br>
+       <br>
+        <p>
+			<small> already a member? <a href="http://localhost:8080/CouponsProjectAPIs/LoginPage.html"> go to login> </a> </small>
+		</p>
+		</fieldset>
+	</form>
+   
+   <script>
+   function overlay(){
+	   document.getElementById("overlay").style.display = "block";
+	   document.getElementById("overlay")
+   }
+   
+   
+   </script>
+    	
+</body>
+</html>

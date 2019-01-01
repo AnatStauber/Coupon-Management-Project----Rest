@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="windows-1255">
+<title>login page</title>
+</head>
+<body style="background-color: MistyRose; font-family: verdana">
+
+	
+	
+	<form id="loginForm" action="javascript:myFunction(); return false;" method="post" 
+		style="background-color: White; outline-style: solid; outline-color: White; outline-width: 10px; border-style: solid; border-color: PaleVioletRed; 
+		padding: 60px; text-align: center; margin: 0; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%)">
+		<!--onSubmit="return myFunction();"-->
+		<p>
+			<b> I am a... : </b> <i>
+			 <input id=1 type="radio" name="userType" value="Customer"> Customer 
+			 <input id=2 type="radio" name="userType" value="Company"> Company
+			</i>
+		</p>
+		<br> <b> UserName: </b> <input id="a" type="text" name="userName" > <br>
+		<br> <b> Password :</b> <input id="b" type="password" name="password" >
+		<!-- <input type="hidden" name="userLoginDetails" id="userLoginDetails"/> -->
+		<br> <br> <br>
+		 <input type="submit" value="Login" onclick="processLogin()" > <br>
+       <br>
+        <p>
+			<small> not a registered user? <a
+				href="http://localhost:8080/CouponsProjectAPIs/register.html">
+					register now> </a>
+			</small>
+		</p>
+	</form>
+    <p id="demo"></p> 
+  
+  	<script>
+    	function processLogin() {
+    		//delete session cookie
+			var cookies = document.cookies;
+			  
+  	      //delete session cookie
+  	      Delete_Cookie('JSESSIONID', '/', '');
+  	      Delete_Cookie('userType', '/', '');
+  	      Delete_Cookie('userId', '/', '');
+  	      Delete_Cookie('loginStatus', '/', '');
+  	      Delete_Cookie('JSESSIONID', '/', '');
+	    	
+  	      var formResults = document.getElementById("loginForm").elements;
+		  var userDetails = {};
+	    	// iterate over the form controls
+	    	for (i = 0; i < formResults.length; i++) {
+	    		var element = formResults[i];
+	    		 switch (element.type) {
+	            	case 'submit':
+	               		break;
+	             	case 'radio':
+	               		if (element.checked) {
+	            	   		userDetails[element.name] = element.value;
+	               		}
+	               		continue;
+	             	default:
+	            	 	userDetails[element.name] = element.value;
+	    		 }
+	    	}
+	    		
+	           var userloginDetails = JSON.stringify(userDetails);
+	           
+	          // document.getElementById("userLoginDetails").value = hiddenUserDetails;
+	           
+	        // Submit the form using javascript
+	           //var form = document.getElementById("loginForm");
+	          // form.removeChild(document.getElementById(1));
+	         // form.removeChild(document.getElementById(2));
+	          // form.removeChild(document.getElementById("a"));
+	          // form.removeChild(document.getElementById("b"));
+	          
+	          //////////////////////////////javascript:myFunction(); return false;
+	           
+	          var http = new XMLHttpRequest();
+	         	 // var form = document.getElementById("loginForm");
+	    	      http.open("post", "http://localhost:8080/CouponsProjectAPIs/rest/Login");
+	    	      http.setRequestHeader('Content-type', 'application/json');
+	    	     
+	    	      //delete session cookie
+	    	      Delete_Cookie('JSESSIONID', '/', '');
+	    	      Delete_Cookie('userType', '/', '');
+	    	      Delete_Cookie('userId', '/', '');
+	    	      Delete_Cookie('loginStatus', '/', '');
+	    	      Delete_Cookie('JSESSIONID', '/', '');
+	    	      
+	    	      http.send(userloginDetails); // Make sure to stringify
+    	}   
+    	</script>
+    	
+    	<script>
+    	
+    		function myFunction(){
+    			 page session="false" ;
+    			return false;
+    			</script> 	
+ 		
+ 		<script>
+    			// this deletes the cookie when called
+    			function Delete_Cookie( name, path, domain ) {
+    				document.cookie =( name +"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path="+ path +";domain=" +domain + "");
+    			}
+    				
+    	</script>   
+  
+  
+  <!--   
+   <script>
+         function getFormResults(formElement) {
+      var formElements = formElement.elements;
+      var formParams = {};
+      var i = 0;
+      var elem = null;
+      for (i = 0; i < formElements.length; i += 1) {
+        elem = formElements[i];
+        switch (elem.type) {
+          case 'submit':
+            break;
+          case 'radio':
+            if (elem.checked) {
+              formParams[elem.name] = elem.value;
+            }
+            break;
+           
+          default:
+            formParams[elem.name] = elem.value;
+        }
+      }
+      var result = JSON.stringify(formParams);
+      //document.getElementById("demo").innerHTML =  jsonObj ;
+      //document.write(jsonObj)
+   
+      const http = new XMLHttpRequest();
+      http.open('POST', 'http://localhost:8080/CouponsProjectAPIs/try');
+      http.setRequestHeader('Content-type', 'application/json');
+      http.send(result) // Make sure to stringify
+      //http.onload = function() {
+          // Do whatever with response
+          
+        //var formResults =  {};
+	    		//var userTypes = document.getElementsByName("userType");
+	    		
+	    		//for (var i = 1; i <2; i++) {
+	    	           // if (userTypes[i].checked) {
+	    	            	// var userType = document.getElementsById(i);
+	    	           // }
+		    	//var userName = document.getElementsByName("userName");
+		    	//var password = document.getElementsByName("password");
+		    	
+		    	//for (var i=0; i<3; i++){
+		    		//formResults
+		    	//} 
+    }
+    
+    
+    --> 

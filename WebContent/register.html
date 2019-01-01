@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="windows-1255">
+<title>register</title>
+</head>
+<style>
+.passwordValidationClass {
+    border: 2px solid red;
+}
+</style>
+<body  style="background-color:MistyRose;font-family:verdana">
+	
+	<script>
+	function changeColor(x) {
+	    x.style.background = "LightGray";
+	}
+	</script>
+	
+	
+	
+	<form id="registerForm" action="javascript:myFunction(); return false;" method="post" 
+		style="background-color: White; outline-style: solid; outline-color: White; outline-width: 10px; border-style: solid; border-color: PaleVioletRed; 
+		padding: 60px; text-align: center; margin: 0; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%)">
+		<h1> join the club! </h1>
+		<br><br><br>
+		<br> <b> UserName: </b> <input id="a" type="text" name="customerName" onfocus="changeColor(this)"> <br>
+		<br> <b> Password :</b> <input id="b" type="password" name="customerPassword" onfocus="changeColor(this)" > <br>
+		<br> <b> repeat password: </b> <input id="c" type="password" name="passwordValidation" onfocus="changeColor(this)">
+		<br> <br> <br>
+		 <input type="submit" value="Join" onclick="register()" > <br>
+       <br>
+        <p>
+			<small> already a member? <a href="http://localhost:8080/CouponsProjectAPIs/LoginPage.html"> go to login> </a> </small>
+		</p>
+	</form>
+    <p id="demo"></p> 
+  
+  	<script>
+    	function register() {
+	    	
+    		
+      	  var formResults = document.getElementById("registerForm").elements;
+     		  var registerDetails = {};
+  	    	// iterate over the form controls
+  	    	for (i = 0; i < formResults.length; i++) {
+  	    		var element = formResults[i];
+  	    		//document.write(element.id +"." + element.name + ": " + element.value + " ");
+  	    		
+  	            	if (element.type== 'submit'){
+  	               		break;
+                      }
+                      else if (element.type== 'password'){
+  	               		if (element.id== "c") {
+  	               			 var passwordValidation1 = element.value;
+                          } else if (element.id== "b") {
+                        	  var passwordValidation2 = element.value;
+                        	  registerDetails[element.name] = element.value;
+  	               		}
+                     } else {
+  	             		registerDetails[element.name] = element.value;
+                     }
+  	    		
+              }
+	    		
+	    	 var CustomerDetails = JSON.stringify(registerDetails);
+	    	 //document.getElementById("demo").innerHTML = CustomerDetails;
+	    	 
+	    	 //validation of passwords	
+		  if (passwordValidation1 != passwordValidation2) {
+				document.getElementsByTagName("INPUT")[1].setAttribute("class", "passwordValidationClass"); 
+		        document.getElementsByTagName("INPUT")[2].setAttribute("class", "passwordValidationClass"); 
+		    	window.alert("oops! \nseems like the 'repeat password' field doesnt match the password you entered. please enter the password again.");
+		    } else {
+				
+		    	
+		    	var http = new XMLHttpRequest();
+		    	http.onreadystatechange = function() {
+		    		 
+		    		if (this.readyState == 4 && (this.getResponseHeader("customerId")!=null)) {
+		    	        	window.location.replace("http://localhost:8080/CouponsProjectAPIs/newCustRedirect.html");
+		    	       }
+		    	      //  if (this.readyState == 4 && this.status == 403){
+		    	        //	window.location.replace("http://localhost:8080/CouponsProjectAPIs/unsuccessfulRegister.html");
+		    	       // }
+		    	 //else document.getElementById("demo").innerHTML = this.responseText;
+		    	       if (this.readyState == 4 && (this.getResponseHeader("exception")!=null)) {
+		    	    	  //document.getElementById("demo").innerHTML = this.responseText;
+		    	    	 window.alert (this.getResponseHeader("exception"));
+		    	      }
+		    	       if (this.readyState == 4 && (this.status==403)) {
+		    	    	   window.location.replace("http://localhost:8080/CouponsProjectAPIs/unsuccessfulRegister.html");
+		    	       }
+		    	 };
+		    	 
+		    	
+		    	 http.open("post", "http://localhost:8080/CouponsProjectAPIs/rest/register");
+			     http.setRequestHeader('Content-type', 'application/json');
+			     http.send(CustomerDetails); 
+		    	
+		    }
+    	}  
+    	
+    	</script>
+    	
+    	
+</body>
+</html>
