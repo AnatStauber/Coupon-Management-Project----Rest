@@ -213,7 +213,7 @@ public class CompanyDao {
 		try {
 			connection = JdbcUtils.getConnection();
 
-			String sql = "SELECT * FROM COMPANY where companyName=? and companyPassword=?";
+			String sql = "SELECT * FROM COMPANY where BINARY companyName=? and BINARY companyPassword=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, companyName);
 			preparedStatement.setString(2, companyPassword);
